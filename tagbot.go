@@ -20,6 +20,7 @@ import (
 func main() {
 
 	var attachments tagger.Attachment
+	var Paint tagger.SprayCans
 
 	// Load Configuration
 	myBot, err := tagger.LoadBotConfig()
@@ -55,7 +56,7 @@ func main() {
 	}
 
 	// Load tag.json data
-	Paint, err := tagger.LoadSprayCans()
+	Paint, err = tagger.LoadSprayCans()
 	if err != nil {
 		fmt.Println("Could not log tag.json, exiting tagger")
 		os.Exit(2)
@@ -83,6 +84,13 @@ func main() {
 				// 411 Info or verison info
 				if strings.Contains(ev.Msg.Text, "your 411") {
 					rtm.SendMessage(rtm.NewOutgoingMessage("My name is "+myBot.BotName+", I tag comments.  My ID is "+myBot.BotID+" and I'm part of the "+myBot.TeamName+" team (ID: "+myBot.TeamID+").  This channels ID is "+ev.Msg.Channel+". Your Slack UID is "+ev.Msg.User, ev.Msg.Channel))
+				}
+
+				if strings.Contains(strings.ToLower(ev.Msg.Text), "reload tags") {
+					userInfo, _ := api.GetUserInfo(ev.Msg.User)
+					tagger.LogToSlack("Reloading tags per request from "+userInfo.Name, myBot, attachments)
+					Paint, _ = tagger.LoadSprayCans()
+					rtm.SendMessage(rtm.NewOutgoingMessage("Tags were reloaded from `tags.json`", ev.Msg.Channel))
 				}
 
 			}
