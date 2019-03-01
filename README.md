@@ -41,4 +41,7 @@ Added emoji directory with both 512x512 and 128x128 tagger graphics for slack.  
 - More graceful RTM disconnects
 - ~Ability to send slack command to reload `tags.json` without having to restart the bot~
 - Clean up config.json for realz
+- Ability to request all words assigned to a tag 
+- Ability to request all available tags
+
 
