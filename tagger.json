@@ -6,6 +6,6 @@
 	"slacktoken": "",
 	"slackhook": "",
 	"logchannel": "#scott-private",
-	"version": "1.11",
+	"version": "",
 	"debug": false
 }

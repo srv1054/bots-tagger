@@ -27,10 +27,18 @@ func main() {
 		os.Exit(0)
 	}
 
+	myBot.Version = "1.12"
+
 	slackhook := flag.String("slackhook", "", "Slack Webhook")
 	slacktoken := flag.String("slacktoken", "", "Slack Bot Token")
+	version := flag.Bool("v", false, "Tagger Version")
 
 	flag.Parse()
+
+	if *version {
+		fmt.Println("Tagger v" + myBot.Version)
+		os.Exit(0)
+	}
 
 	myBot.SlackHook = *slackhook
 	myBot.SlackToken = *slacktoken
