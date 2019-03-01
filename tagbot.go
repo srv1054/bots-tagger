@@ -58,10 +58,10 @@ func main() {
 	// Load tag.json data
 	Paint, err = tagger.LoadSprayCans()
 	if err != nil {
-		fmt.Println("Could not log tag.json, exiting tagger")
+		fmt.Println("Could not log tags.json, exiting tagger")
 		os.Exit(2)
 	} else {
-		tagger.LogToSlack("Spray Paint Data loaded from tag.json! I'm watching "+strconv.Itoa(len(Paint))+" different tags.", myBot, attachments)
+		tagger.LogToSlack("Spray Paint Data loaded from `tags.json`! I'm watching *"+strconv.Itoa(len(Paint))+"* different tags.", myBot, attachments)
 	}
 
 	// Slack RTM initilization
