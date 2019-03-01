@@ -21,6 +21,9 @@ func main() {
 
 	var attachments tagger.Attachment
 	var Paint tagger.SprayCans
+	var message string
+	var hmessage string
+	var payload tagger.BotDMPayload
 
 	// Load Configuration
 	myBot, err := tagger.LoadBotConfig()
@@ -29,7 +32,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	myBot.Version = "1.4"
+	myBot.Version = "1.5"
 
 	slackhook := flag.String("slackhook", "", "Slack Webhook")
 	slacktoken := flag.String("slacktoken", "", "Slack Bot Token")
@@ -92,6 +95,73 @@ func main() {
 					tagger.LogToSlack("Reloading tags per request from "+userInfo.Name, myBot, attachments)
 					Paint, _ = tagger.LoadSprayCans()
 					rtm.SendMessage(rtm.NewOutgoingMessage("Tags were reloaded from `tags.json`", ev.Msg.Channel))
+				}
+
+				if strings.Contains(strings.ToLower(ev.Msg.Text), "show all tags") {
+					message = ""
+					for _, p := range Paint {
+						hmessage = "Keywords for tag :" + p.Spray + ":\n"
+						for _, w := range p.Words {
+							message = message + w + "\n"
+						}
+
+						userInfo, _ := api.GetUserInfo(ev.Msg.User)
+
+						payload.Text = hmessage
+						payload.Channel = userInfo.ID
+						attachments.Color = "#00ff00"
+						attachments.Text = message
+						payload.Attachments = append(payload.Attachments, attachments)
+
+						tagger.WranglerDM(myBot, payload)
+
+						message = ""
+						payload.Attachments = nil
+					}
+					rtm.SendMessage(rtm.NewOutgoingMessage("I have sent you a DM with your results! :love_letter:", ev.Msg.Channel))
+
+				}
+
+				if strings.Contains(strings.ToLower(ev.Msg.Text), "show keywords for ") {
+					message = ""
+					hmessage = ""
+
+					cleanMsg := strings.Replace(strings.ToLower(ev.Msg.Text), "<@"+strings.ToLower(myBot.BotID)+"> ", "", -1)
+					colonStrip := strings.Replace(cleanMsg, ":", "", -1)
+					whatsaid := strings.Split(colonStrip, " ")
+
+					if len(whatsaid) == 4 {
+						tag := whatsaid[3]
+
+						for _, p := range Paint {
+							if tag == p.Spray {
+								hmessage = "Keywords for tag :" + p.Spray + ":\n"
+								for _, w := range p.Words {
+									message = message + w + "\n"
+								}
+
+								userInfo, _ := api.GetUserInfo(ev.Msg.User)
+
+								payload.Text = hmessage
+								payload.Channel = userInfo.ID
+								attachments.Color = "#00ff00"
+								attachments.Text = message
+								payload.Attachments = append(payload.Attachments, attachments)
+
+								tagger.WranglerDM(myBot, payload)
+
+								message = ""
+								payload.Attachments = nil
+							}
+						}
+						if hmessage == "" {
+							rtm.SendMessage(rtm.NewOutgoingMessage("I could not find a tag with keywords for :"+tag+":, sorry!", ev.Msg.Channel))
+						} else {
+							rtm.SendMessage(rtm.NewOutgoingMessage("I have sent you a DM with your results! :love_letter:", ev.Msg.Channel))
+						}
+					} else {
+						rtm.SendMessage(rtm.NewOutgoingMessage("I don't understand what you are asking me to do!", ev.Msg.Channel))
+					}
 				}
 
 			}
