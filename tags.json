@@ -65,20 +65,20 @@
         ]
     },
     {
-        "spray": "drevil",
-        "words" : [
-			"laser",
-			"lasers",
-            "laser beams",
-            "laser beam",
-            "laser-beams",
-            "laser-beam",
-            "sharks with frickin ",
-            "sharks with frickn' ",
-            "one million dollars",
-            "million dollars",
-            "mini-me",
-            "mini me"
+	"spray": "drevil",
+	"words" : [
+		"laser",
+		"lasers",
+		"laser beams",
+		"laser beam",
+		"laser-beams",
+		"laser-beam",
+		"sharks with frickin ",
+		"sharks with frickn' ",
+		"one million dollars",
+		"million dollars",
+		"mini-me",
+		"mini me"
         ]
     }
 ]
