@@ -44,7 +44,7 @@ Added emoji directory with both 512x512 and 128x128 tagger graphics for slack.  
 Here's a list of messages you can send tagger inside slack to get information:
 - `@tagger show all tags` - tagger will Direct Message you inside Slack with all of tags in `tags.json` and their associated keywords.
 - `@tagger reload tags` - tagger will re-read and load the `tags.json` file.  If you make edits to it this will make them effective without restarting tagger.  If you screw up the json formatting tagger will most likely crash after this command.
-- `@tagger show keywords for &lt;tag name&gt;` - Will show all keywords tied to the specific tag (emoji) listed. For example: `@tagger show keywords for :businesscat:` (colons are optional)
+- `@tagger show keywords for <tag name>` - Will show all keywords tied to the specific tag (emoji) listed. For example: `@tagger show keywords for :businesscat:` (colons are optional)
 
 ## TODO
 - More graceful RTM disconnects
