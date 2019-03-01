@@ -2,7 +2,7 @@
     {
     "spray": "businesscat",
     "words" : [
-        "synergy",
+		"synergy",
 		"disruptor",
 		"low-hanging fruit",
 		"low hanging fruit",
@@ -59,25 +59,27 @@
 		"vertical market",
 		"mindset",
 		"service oriented",
-        "throw it over the wall",
-        "rubber meets the road",
-        "rubber hits the road"
+		"throw it over the wall",
+		"rubber meets the road",
+		"rubber hits the road"
         ]
     },
     {
-        "spray": "drevil",
-        "words" : [
-            "laser",
-            "laser beams",
-            "laser beam",
-            "laser-beams",
-            "laser-beam",
-            "sharks with frickin ",
-            "sharks with frickn' ",
-            "one million dollars",
-            "million dollars",
-            "mini-me",
-            "mini me"
+	"spray": "drevil",
+	"words" : [
+		"laser",
+		"lasers",
+		"laser beams",
+		"laser beam",
+		"laser-beams",
+		"laser-beam",
+		"sharks with frickin ",
+		"sharks with frickn' ",
+		"one million dollars",
+		"million dollars",
+		"meow mix",
+		"mini-me",
+		"mini me"
         ]
     }
 ]

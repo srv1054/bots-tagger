@@ -20,6 +20,7 @@ import (
 func main() {
 
 	var attachments tagger.Attachment
+	var Paint tagger.SprayCans
 
 	// Load Configuration
 	myBot, err := tagger.LoadBotConfig()
@@ -28,7 +29,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	myBot.Version = "1.2"
+	myBot.Version = "1.3"
 
 	slackhook := flag.String("slackhook", "", "Slack Webhook")
 	slacktoken := flag.String("slacktoken", "", "Slack Bot Token")
@@ -55,12 +56,12 @@ func main() {
 	}
 
 	// Load tag.json data
-	Paint, err := tagger.LoadSprayCans()
+	Paint, err = tagger.LoadSprayCans()
 	if err != nil {
-		fmt.Println("Could not log tag.json, exiting tagger")
+		fmt.Println("Could not log tags.json, exiting tagger")
 		os.Exit(2)
 	} else {
-		tagger.LogToSlack("Spray Paint Data loaded from tag.json! I'm watching "+strconv.Itoa(len(Paint))+" different tags.", myBot, attachments)
+		tagger.LogToSlack("Spray Paint Data loaded from `tags.json`! I'm watching *"+strconv.Itoa(len(Paint))+"* different tags.", myBot, attachments)
 	}
 
 	// Slack RTM initilization
@@ -83,6 +84,13 @@ func main() {
 				// 411 Info or verison info
 				if strings.Contains(ev.Msg.Text, "your 411") {
 					rtm.SendMessage(rtm.NewOutgoingMessage("My name is "+myBot.BotName+", I tag comments.  My ID is "+myBot.BotID+" and I'm part of the "+myBot.TeamName+" team (ID: "+myBot.TeamID+").  This channels ID is "+ev.Msg.Channel+". Your Slack UID is "+ev.Msg.User, ev.Msg.Channel))
+				}
+
+				if strings.Contains(strings.ToLower(ev.Msg.Text), "reload tags") {
+					userInfo, _ := api.GetUserInfo(ev.Msg.User)
+					tagger.LogToSlack("Reloading tags per request from "+userInfo.Name, myBot, attachments)
+					Paint, _ = tagger.LoadSprayCans()
+					rtm.SendMessage(rtm.NewOutgoingMessage("Tags were reloaded from `tags.json`", ev.Msg.Channel))
 				}
 
 			}
