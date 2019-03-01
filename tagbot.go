@@ -10,6 +10,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/nlopes/slack"
@@ -27,7 +28,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	myBot.Version = "1.12"
+	myBot.Version = "1.2"
 
 	slackhook := flag.String("slackhook", "", "Slack Webhook")
 	slacktoken := flag.String("slacktoken", "", "Slack Bot Token")
@@ -51,6 +52,15 @@ func main() {
 	tagger.LogToSlack("*Tagger starting up.* `Version: "+myBot.Version+"`", myBot, attachments)
 	if myBot.Debug {
 		fmt.Println("Tagger starting up. Version: " + myBot.Version)
+	}
+
+	// Load tag.json data
+	Paint, err := tagger.LoadSprayCans()
+	if err != nil {
+		fmt.Println("Could not log tag.json, exiting tagger")
+		os.Exit(2)
+	} else {
+		tagger.LogToSlack("Spray Paint Data loaded from tag.json! I'm watching "+strconv.Itoa(len(Paint))+" different tags.", myBot, attachments)
 	}
 
 	// Slack RTM initilization
@@ -77,8 +87,7 @@ func main() {
 
 			}
 
-			tagger.Bizcat(myBot, ev)
-			tagger.DrEvil(myBot, ev)
+			tagger.TagIt(myBot, Paint, ev)
 
 		case *slack.PresenceChangeEvent:
 			//fmt.Printf("Presence Change: %v\n", ev)

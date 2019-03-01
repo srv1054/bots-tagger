@@ -22,16 +22,16 @@ type MyBot struct {
 // LoadBotConfig - Load Main Bot Configuration TOML
 func LoadBotConfig() (myBot *MyBot, err error) {
 
-	file, err := os.Open("tagger.json")
+	file, err := os.Open("config.json")
 	if err != nil {
-		fmt.Println("Error opening tagger.json file: " + err.Error() + ".  Must be in running directory.")
+		fmt.Println("Error opening config.json file: " + err.Error() + ".  Must be in running directory.")
 		return myBot, err
 	}
 
 	decoded := json.NewDecoder(file)
 	err = decoded.Decode(&myBot)
 	if err != nil {
-		fmt.Println("Error reading invalid tagger.json file: " + err.Error())
+		fmt.Println("Error reading invalid config.json file: " + err.Error())
 		return myBot, err
 	}
 
@@ -40,6 +40,25 @@ func LoadBotConfig() (myBot *MyBot, err error) {
 	}
 
 	return myBot, nil
+}
+
+// LoadSprayCans - Load tag.json tagger data file
+func LoadSprayCans() (spray SprayCans, err error) {
+
+	file, err := os.Open("tags.json")
+	if err != nil {
+		fmt.Println("Error opening tags.json file: " + err.Error() + ".  Must be in running directory.")
+		return spray, err
+	}
+
+	decoded := json.NewDecoder(file)
+	err = decoded.Decode(&spray)
+	if err != nil {
+		fmt.Println("Error reading invalid tags.json file: " + err.Error())
+		return spray, err
+	}
+
+	return spray, nil
 }
 
 // errTrap - Generic error handling function
