@@ -6,8 +6,10 @@ Such as hearing the word "Synergy" in a slack message tagger could stick a Busin
 
 You need a slack webhook and a slack bot token to make it run.
 
-Here's where: https://api.slack.com/apps?new_app=1  
+Here's where you can build an app (the truly right way to implement): https://api.slack.com/apps?new_app=1  
 You can configure the Webhook and BOT features in the "Add Features and Functionality" Section.
+
+***However*** - for free slacks with limited integrations, or the quick and dirty way to do this you can simply add a standard slack webhook (emoji directory) and wrap the tagger avatar and name on it and use that URL.   Then in the Custom Integratons section add a stand-alone bot wrapping the tagger avatar (emoji directory) and tagger name around that.  This will get you the two required slack tokens you need above.
 
 To make this bot go you will need two things once this is all complete:
 - Your Incoming Webhook URL. It will look kinda like this: `https://hooks.slack.com/services/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QkaNlP` )
