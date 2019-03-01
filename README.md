@@ -50,4 +50,4 @@ Here's a list of messages you can send tagger inside slack to get information:
 - ~Ability to send slack command to reload `tags.json` without having to restart the bot~
 - Clean up config.json for realz
 - Ability to request all words assigned to a tag 
-- Ability to request all available tags
+- ~Ability to request all available tags~
