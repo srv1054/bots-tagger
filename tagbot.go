@@ -29,7 +29,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	myBot.Version = "1.2"
+	myBot.Version = "1.3"
 
 	slackhook := flag.String("slackhook", "", "Slack Webhook")
 	slacktoken := flag.String("slacktoken", "", "Slack Bot Token")

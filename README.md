@@ -26,7 +26,7 @@ This file tells tagger what to do.   See the sample in the source code, feel fre
 
 Taggers searching is wildcarded so that the slack statement "contains" the words you list, anywhere in the statement.
 
-Currently if you edit tags.json you will have to restart the bot to pick up those changes.  See TODO
+As of release 1.3 you can now update the `tags.json` file while tagger is running and then from slack issue a command to have him re-read/load the tags to get your updates.  Command:  `@tagger reload tags`
 
 ## Creating the Config
 You will need to create or pull from source and edit tagger.json using standard JSON file format fill in the few required items.
