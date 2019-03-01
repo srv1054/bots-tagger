@@ -35,7 +35,7 @@ You will need to create or pull from source and edit tagger.json using standard 
 - Currently ALL other values in the config.json are being ignored.
 
 ## TODO
-1 - More graceful RTM disconnects
-2 - Ability to send slack command to reload `tags.json` without having to restart the bot
-3 - Clean up config.json for realz
+- More graceful RTM disconnects
+- Ability to send slack command to reload `tags.json` without having to restart the bot
+- Clean up config.json for realz
 
