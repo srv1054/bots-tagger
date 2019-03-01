@@ -29,7 +29,7 @@ func main() {
 		os.Exit(0)
 	}
 
-	myBot.Version = "1.3"
+	myBot.Version = "1.4"
 
 	slackhook := flag.String("slackhook", "", "Slack Webhook")
 	slacktoken := flag.String("slacktoken", "", "Slack Bot Token")
@@ -49,19 +49,20 @@ func main() {
 		os.Exit(0)
 	}
 
+	// Load tag.json data
+	Paint, err = tagger.LoadSprayCans()
+	if err != nil {
+		fmt.Println("Could not load tags.json, exiting tagger")
+		tagger.LogToSlack("Could not load `tags.json`, exiting tagger", myBot, attachments)
+		os.Exit(2)
+	} else {
+		tagger.LogToSlack("Spray Paint Data loaded from `tags.json`! I'm watching *"+strconv.Itoa(len(Paint))+"* different tags.", myBot, attachments)
+	}
+
 	// Announce startup to logs
 	tagger.LogToSlack("*Tagger starting up.* `Version: "+myBot.Version+"`", myBot, attachments)
 	if myBot.Debug {
 		fmt.Println("Tagger starting up. Version: " + myBot.Version)
-	}
-
-	// Load tag.json data
-	Paint, err = tagger.LoadSprayCans()
-	if err != nil {
-		fmt.Println("Could not log tags.json, exiting tagger")
-		os.Exit(2)
-	} else {
-		tagger.LogToSlack("Spray Paint Data loaded from `tags.json`! I'm watching *"+strconv.Itoa(len(Paint))+"* different tags.", myBot, attachments)
 	}
 
 	// Slack RTM initilization
