@@ -34,6 +34,9 @@ You will need to create or pull from source and edit tagger.json using standard 
 - Debug - setting this to true will cause the BOT to dump errors and messages to the console it is running in.  In some cases this can provide additional info if needed for troubleshooting.  Normally this should just be set to False
 - Currently ALL other values in the config.json are being ignored.
 
+## Images
+Added emoji directory with both 512x512 and 128x128 tagger graphics for slack.   The 128 can be uploaded as an emoji as well as used for slackhook avatar.   The 512x512 is required if you setup an app bot, use this larger file for the avatar.
+
 ## TODO
 - More graceful RTM disconnects
 - ~Ability to send slack command to reload `tags.json` without having to restart the bot~
