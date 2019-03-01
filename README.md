@@ -52,3 +52,4 @@ Here's a list of messages you can send tagger inside slack to get information:
 - Clean up config.json for realz
 - ~Ability to request all words assigned to a tag~
 - ~Ability to request all available tags~
+- In Slack help request to display available commands
