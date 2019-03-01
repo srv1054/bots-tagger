@@ -11,7 +11,7 @@ You can configure the Webhook and BOT features in the "Add Features and Function
 
 To make this bot go you will need two things once this is all complete:
 - Your Incoming Webhook URL. It will look kinda like this: `https://hooks.slack.com/services/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QkaNlP` )
-- Your Slack App BOT Token (Look in the OAUTH section).  It will look kinda like this: 
+- Your Slack App BOT Token (Look in the OAUTH section).  It will look kinda like this (it must start with xoxb and not anything else): 
 `xoxb-76d11452182-7611398727-217937067376-46e6edasdff9054daf3000baf1aa36b8836a`
 
 You will need to pass these to your bot on the command line when you launch it:
