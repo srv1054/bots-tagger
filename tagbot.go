@@ -24,6 +24,7 @@ func main() {
 	var message string
 	var hmessage string
 	var payload tagger.BotDMPayload
+	var helpload tagger.BotDMPayload
 	var myBot tagger.MyBot
 
 	myBot.Version = "1.6"
@@ -91,6 +92,7 @@ func main() {
 
 		case *slack.MessageEvent:
 
+			// check only messages that refer to the bot itself
 			if strings.Contains(ev.Msg.Text, "@"+myBot.BotID) || string(ev.Msg.Channel[0]) == "D" {
 				// 411 Info or verison info
 				if strings.Contains(ev.Msg.Text, "your 411") {
@@ -106,6 +108,8 @@ func main() {
 
 				if strings.Contains(strings.ToLower(ev.Msg.Text), "show all tags") {
 					message = ""
+					payload.Attachments = nil
+
 					for _, p := range Paint {
 						hmessage = "Keywords for tag :" + p.Spray + ":\n"
 						for _, w := range p.Words {
@@ -171,8 +175,36 @@ func main() {
 					}
 				}
 
+				if strings.Contains(strings.ToLower(ev.Msg.Text), "help") {
+					cleanMsg := strings.Replace(strings.ToLower(ev.Msg.Text), "<@"+strings.ToLower(myBot.BotID)+"> ", "", -1)
+					helpmin := strings.Split(cleanMsg, " ")
+					if len(helpmin) < 2 {
+
+						message := ""
+						helpload.Attachments = nil
+
+						userInfo, _ := api.GetUserInfo(ev.Msg.User)
+
+						message = "`show all tags` - I will Direct Message you with all of tags I know about and their associated keywords.\n"
+						message = message + "`reload tags` - I will re-read and load the tags.json file. If you make edits to it this will make them effective without restarting me.\n"
+						message = message + "`show keywords for <tag name>` - I will show all keywords tied to the specific tag (emoji) listed. For Example:\n"
+						message = message + ">`@tagger show keywords for :businesscat: (colons are optional)`\n"
+						helpload.Text = "Hi, I'm " + myBot.BotName + ".  I tag emojis on to slack messages containing keywords I know about.\nHere's a few slack commands I know:"
+						helpload.Channel = userInfo.ID
+						attachments.Color = "#00ffff"
+						attachments.Text = message
+						helpload.Attachments = append(helpload.Attachments, attachments)
+
+						tagger.WranglerDM(myBot, helpload)
+
+						message = ""
+						helpload.Attachments = nil
+					}
+				}
+
 			}
 
+			// check all messages for tags
 			tagger.TagIt(myBot, Paint, ev)
 
 		case *slack.PresenceChangeEvent:
