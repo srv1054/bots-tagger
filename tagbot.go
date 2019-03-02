@@ -24,18 +24,14 @@ func main() {
 	var message string
 	var hmessage string
 	var payload tagger.BotDMPayload
+	var myBot tagger.MyBot
 
-	// Load Configuration
-	myBot, err := tagger.LoadBotConfig()
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(0)
-	}
-
-	myBot.Version = "1.5"
+	myBot.Version = "1.6"
 
 	slackhook := flag.String("slackhook", "", "Slack Webhook")
 	slacktoken := flag.String("slacktoken", "", "Slack Bot Token")
+	configPath := flag.String("conf", "", "Configuration file path (optional if not in running directory)")
+	jsonPath := flag.String("json", "", "Path to tags.json file (optional if not in running directory)")
 	version := flag.Bool("v", false, "Tagger Version")
 
 	flag.Parse()
@@ -47,13 +43,24 @@ func main() {
 
 	myBot.SlackHook = *slackhook
 	myBot.SlackToken = *slacktoken
+	myBot.ConfigPath = *configPath
+	myBot.JSONPath = *jsonPath
 	if myBot.SlackHook == "" || myBot.SlackToken == "" {
 		fmt.Println("\nWarning CLI parameters: -slacktoken and -slackhook are required!")
 		os.Exit(0)
 	}
 
+	// Load Configuration
+	tmpBot, err := tagger.LoadBotConfig(myBot)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(0)
+	}
+	myBot.LogChannel = tmpBot.LogChannel
+	myBot.Debug = tmpBot.Debug
+
 	// Load tag.json data
-	Paint, err = tagger.LoadSprayCans()
+	Paint, err = tagger.LoadSprayCans(myBot.JSONPath)
 	if err != nil {
 		fmt.Println("Could not load tags.json, exiting tagger")
 		tagger.LogToSlack("Could not load `tags.json`, exiting tagger", myBot, attachments)
@@ -93,7 +100,7 @@ func main() {
 				if strings.Contains(strings.ToLower(ev.Msg.Text), "reload tags") {
 					userInfo, _ := api.GetUserInfo(ev.Msg.User)
 					tagger.LogToSlack("Reloading tags per request from "+userInfo.Name, myBot, attachments)
-					Paint, _ = tagger.LoadSprayCans()
+					Paint, _ = tagger.LoadSprayCans(myBot.JSONPath)
 					rtm.SendMessage(rtm.NewOutgoingMessage("Tags were reloaded from `tags.json`", ev.Msg.Channel))
 				}
 

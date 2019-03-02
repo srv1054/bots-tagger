@@ -13,7 +13,7 @@ type SprayCans []struct {
 }
 
 // TagIt - check for and tag sumthin
-func TagIt(myBot *MyBot, paint SprayCans, ev *slack.MessageEvent) {
+func TagIt(myBot MyBot, paint SprayCans, ev *slack.MessageEvent) {
 
 	has, tag := cancontains(paint, strings.ToLower(ev.Msg.Text))
 

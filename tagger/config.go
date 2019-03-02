@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"runtime"
 )
 
 // MyBot - Bot Configuration Options
@@ -16,38 +17,68 @@ type MyBot struct {
 	TeamName   string `json:"teamname"`
 	LogChannel string `json:"logchannel"`
 	Version    string `json:"version"`
+	ConfigPath string `json:"config"`
+	JSONPath   string `json:"json"`
+	Debug      bool   `json:"debug"`
+}
+
+// ConfigFile - Configuration File options
+type ConfigFile struct {
+	LogChannel string `json:"logchannel"`
 	Debug      bool   `json:"debug"`
 }
 
 // LoadBotConfig - Load Main Bot Configuration TOML
-func LoadBotConfig() (myBot *MyBot, err error) {
+func LoadBotConfig(myBot MyBot) (tmpBot ConfigFile, err error) {
+	var fileName string
 
-	file, err := os.Open("config.json")
+	if myBot.ConfigPath == "" {
+		fileName = "config.json"
+	} else {
+		if runtime.GOOS == "windows" {
+			fileName = myBot.ConfigPath + "\\config.json"
+		} else {
+			fileName = myBot.ConfigPath + "/config.json"
+		}
+	}
+
+	file, err := os.Open(fileName)
 	if err != nil {
-		fmt.Println("Error opening config.json file: " + err.Error() + ".  Must be in running directory.")
-		return myBot, err
+		fmt.Println("Error opening config.json file: " + err.Error() + ".  Could not find path for " + fileName)
+		return tmpBot, err
 	}
 
 	decoded := json.NewDecoder(file)
-	err = decoded.Decode(&myBot)
+	err = decoded.Decode(&tmpBot)
 	if err != nil {
 		fmt.Println("Error reading invalid config.json file: " + err.Error())
-		return myBot, err
+		return tmpBot, err
 	}
 
-	if myBot.Debug {
-		fmt.Printf("%+v", myBot)
+	if tmpBot.Debug {
+		fmt.Printf("%+v", tmpBot)
 	}
 
-	return myBot, nil
+	return tmpBot, nil
 }
 
 // LoadSprayCans - Load tag.json tagger data file
-func LoadSprayCans() (spray SprayCans, err error) {
+func LoadSprayCans(pathname string) (spray SprayCans, err error) {
+	var fileName string
 
-	file, err := os.Open("tags.json")
+	if pathname == "" {
+		fileName = "tags.json"
+	} else {
+		if runtime.GOOS == "windows" {
+			fileName = pathname + "\\tags.json"
+		} else {
+			fileName = pathname + "/tags.json"
+		}
+	}
+
+	file, err := os.Open(fileName)
 	if err != nil {
-		fmt.Println("Error opening tags.json file: " + err.Error() + ".  Must be in running directory.")
+		fmt.Println("Error opening tags.json file: " + err.Error() + ".   Could not find path for " + fileName)
 		return spray, err
 	}
 
@@ -62,7 +93,7 @@ func LoadSprayCans() (spray SprayCans, err error) {
 }
 
 // errTrap - Generic error handling function
-func errTrap(myBot *MyBot, message string, err error) {
+func errTrap(myBot MyBot, message string, err error) {
 	var attachments Attachment
 
 	if myBot.Debug {

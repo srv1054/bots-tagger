@@ -40,7 +40,7 @@ You will need to create or pull from source and edit tagger.json using standard 
 ## Images
 Added emoji directory with both 512x512 and 128x128 tagger graphics for slack.   The 128 can be uploaded as an emoji as well as used for slackhook avatar.   The 512x512 is required if you setup an app bot, use this larger file for the avatar.
 
-## Tagger Slack commands
+## Tagger Slack commands 
 Here's a list of messages you can send tagger inside slack to get information:
 - `@tagger show all tags` - tagger will Direct Message you inside Slack with all of tags in `tags.json` and their associated keywords.
 - `@tagger reload tags` - tagger will re-read and load the `tags.json` file.  If you make edits to it this will make them effective without restarting tagger.  If you screw up the json formatting tagger will most likely crash after this command.
@@ -49,7 +49,9 @@ Here's a list of messages you can send tagger inside slack to get information:
 ## TODO
 - More graceful RTM disconnects
 - ~Ability to send slack command to reload `tags.json` without having to restart the bot~
-- Clean up config.json for realz
+- ~Clean up config.json for realz~
 - ~Ability to request all words assigned to a tag~
 - ~Ability to request all available tags~
 - In Slack help request to display available commands
+- ~Ability to specify path to tags.json on command line~
+- ~Ability to specify path to config.json on command line~

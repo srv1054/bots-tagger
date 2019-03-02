@@ -1,11 +1,4 @@
 {
-	"teamname": "",
-	"teamid": "",
-	"botname": "",
-	"botid": "",
-	"slacktoken": "",
-	"slackhook": "",
 	"logchannel": "#scott-private",
-	"version": "",
 	"debug": false
-}
+} 

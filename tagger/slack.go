@@ -98,7 +98,7 @@ const (
 )
 
 // PostSnippet - Post a snippet of any type to slack channel
-func PostSnippet(myBot *MyBot, fileType string, fileContent string, channel string, title string) error {
+func PostSnippet(myBot MyBot, fileType string, fileContent string, channel string, title string) error {
 
 	form := url.Values{}
 
@@ -152,7 +152,7 @@ func Send(webhookURL string, proxy string, payload Payload) []error {
 }
 
 // WranglerDM - Send chat.Post API DM messages "as the bot"
-func WranglerDM(myBot *MyBot, payload BotDMPayload) error {
+func WranglerDM(myBot MyBot, payload BotDMPayload) error {
 	url := "https://slack.com/api/chat.postMessage"
 
 	payload.Token = myBot.SlackToken
@@ -201,7 +201,7 @@ func Wrangler(webhookURL string, message string, myChannel string, attachments A
 }
 
 //LogToSlack - Dump Logs to a Slack Channel
-func LogToSlack(message string, myBot *MyBot, attachments Attachment) {
+func LogToSlack(message string, myBot MyBot, attachments Attachment) {
 	now := time.Now().Local()
 	message = "*" + now.Format("01/02/2006 15:04:05") + " :* " + message
 
@@ -209,7 +209,7 @@ func LogToSlack(message string, myBot *MyBot, attachments Attachment) {
 }
 
 // AddReaction - add an emoji reaction to a message (expects proper ReactionPayload struct)
-func AddReaction(myBot *MyBot, payload ReactionPayload) error {
+func AddReaction(myBot MyBot, payload ReactionPayload) error {
 
 	payload.Token = myBot.SlackToken
 
