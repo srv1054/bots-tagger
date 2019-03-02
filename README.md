@@ -4,6 +4,8 @@ Tagger will tag things people say in a slack channel that contain specific words
 
 Such as hearing the word "Synergy" in a slack message tagger could stick a Business Cat emoji on that message.
 
+This is only limited to your imagination and available slack emojis.  You can create all of these via the tags.json file, as many as you'd like.  Read on...
+
 ## To get it running
 You need a slack webhook and a slack bot token to make it run.
 
