@@ -189,9 +189,9 @@ func Wrangler(webhookURL string, message string, myChannel string, attachments A
 
 	payload := Payload{
 		Text:        message,
-		Username:    "WALL-E",
+		Username:    "tagger",
 		Channel:     myChannel,
-		IconEmoji:   ":walle:",
+		IconEmoji:   ":spray-paint:",
 		Attachments: []Attachment{attachments},
 	}
 	err := Send(webhookURL, "", payload)

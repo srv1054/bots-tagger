@@ -27,7 +27,7 @@ func main() {
 	var helpload tagger.BotDMPayload
 	var myBot tagger.MyBot
 
-	myBot.Version = "1.6"
+	myBot.Version = "1.61"
 
 	slackhook := flag.String("slackhook", "", "Slack Webhook")
 	slacktoken := flag.String("slacktoken", "", "Slack Bot Token")
