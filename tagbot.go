@@ -100,6 +100,8 @@ func main() {
 				}
 
 				if strings.Contains(strings.ToLower(ev.Msg.Text), "reload tags") {
+					attachments.Text = ""
+					attachments.Color = ""
 					userInfo, _ := api.GetUserInfo(ev.Msg.User)
 					tagger.LogToSlack("Reloading tags per request from "+userInfo.Name, myBot, attachments)
 					Paint, _ = tagger.LoadSprayCans(myBot.JSONPath)
