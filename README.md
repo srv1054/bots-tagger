@@ -24,7 +24,7 @@ You will need to pass these to your bot on the command line when you launch it:
 `tagger -slacktoken YOURTOKEN -slackhook WEBURL`  (no quotes needed)
 
 ## Notes on running
-At the moment tag bot just holds the console open, and will dump messages to it if DEBUG is on as well as to slack logging channel specified in the config.json.  Either run this inside a "screen" session or dedicated window, or run it as a service so that if it crashes it will restart itself.    If the Slack RTM disconnects you (it can happen) you will have to relaunch the bot.  I'm working on a more graceful recovery around that, so stay tuned.
+At the moment tag bot just holds the console open, and will dump messages to it if DEBUG is on, as well as, always to slack logging channel specified in the config.json.  Either run this inside a "screen" session or dedicated window, or run it as a service (recommended) so that if it crashes it will restart itself.    
 
 ## tags.json - Required Data File
 This file tells tagger what to do.   See the sample in the source code, feel free to steal it and edit it.  You must properly format this json file or tagger will puke on you when you run it.  Each section contains the emoji to spray tag something with and the words that trigger it.   Be careful what words you use, or you will have tagger hitting everything all the time....quite annoying really.  
@@ -52,7 +52,8 @@ Here's a list of messages you can send tagger inside slack to get information:
 - `@tagger show keywords for <tag name>` - Will show all keywords tied to the specific tag (emoji) listed. For example: `@tagger show keywords for :businesscat:` (colons are optional)
 
 ## TODO
-- More graceful RTM disconnects
+- Ability to add/remove tags from slack channel
+- ~More graceful RTM disconnects~
 - ~Ability to send slack command to reload `tags.json` without having to restart the bot~
 - ~Clean up config.json for realz~
 - ~Ability to request all words assigned to a tag~
