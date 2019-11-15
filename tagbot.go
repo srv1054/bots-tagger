@@ -22,7 +22,7 @@ func main() {
 	var Paint tagger.SprayCans
 	var myBot tagger.MyBot
 
-	myBot.Version = "1.7"
+	myBot.Version = "2.0.1"
 
 	slackhook := flag.String("slackhook", "", "Slack Webhook")
 	slacktoken := flag.String("slacktoken", "", "Slack Bot Token")

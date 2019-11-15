@@ -1,4 +1,6 @@
 {
 	"logchannel": "#scott-channel-of-test",
-	"debug": false
+	"debug": false,
+	"rediscon": "localhost:6379",
+	"redisdb": "db"
 } 

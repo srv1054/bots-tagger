@@ -9,23 +9,28 @@ import (
 
 // MyBot - Bot Configuration Options
 type MyBot struct {
-	SlackHook  string `json:"slackhook"`
-	SlackToken string `json:"slacktoken"`
-	BotID      string `json:"botid"`
-	BotName    string `json:"botname"`
-	TeamID     string `json:"teamid"`
-	TeamName   string `json:"teamname"`
+	SlackHook  string
+	SlackToken string
+	BotID      string
+	BotName    string
+	TeamID     string
+	TeamName   string
 	LogChannel string `json:"logchannel"`
-	Version    string `json:"version"`
-	ConfigPath string `json:"config"`
-	JSONPath   string `json:"json"`
+	Version    string
+	ConfigPath string
+	JSONPath   string
 	Debug      bool   `json:"debug"`
+	RedisCon   string `json:"rediscon"`
+	RedisDB    int    `json:"redisdb"`
+	RedisPass  string
 }
 
 // ConfigFile - Configuration File options
 type ConfigFile struct {
 	LogChannel string `json:"logchannel"`
 	Debug      bool   `json:"debug"`
+	RedisCon   string `json:"rediscon"`
+	RedisDB    int    `json:"redisdb"`
 }
 
 // LoadBotConfig - Load Main Bot Configuration TOML
