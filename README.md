@@ -1,7 +1,6 @@
 # Start of overhaul/refactor
 This bot was written long ago before many slack upgrades and go upgrades and me learning a lot more so I'm going to overhaul it, refactor some stuff, clean it up and add some new features.  Updated README forthcoming as well.
 
---------------- SNIP -----------------------
 
 
 # bots-tagger
